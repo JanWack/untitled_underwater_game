@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://2mlb4ly5myq3" path="res://assets/environments/kloofendal_48d_partly_cloudy_puresky_4k.hdr" id="1_6ulkd"]
 [ext_resource type="PackedScene" uid="uid://bwtv6nod8ovtg" path="res://scenes/submarine.tscn" id="2_fn2sa"]
+[ext_resource type="Script" uid="uid://ckkp8j21wg3lf" path="res://scripts/terrain/terrain_generation.gd" id="3_57l66"]
+[ext_resource type="FastNoiseLite" uid="uid://bdr8a2vsj1bix" path="res://assets/terrain/terrain_noise.tres" id="4_p21b5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_57l66"]
 panorama = ExtResource("1_6ulkd")
@@ -14,6 +16,29 @@ background_mode = 2
 sky = SubResource("Sky_6ulkd")
 glow_enabled = true
 
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fn2sa"]
+width = 128
+height = 128
+generate_mipmaps = false
+noise = ExtResource("4_p21b5")
+invert = true
+
+[sub_resource type="Gradient" id="Gradient_p21b5"]
+offsets = PackedFloat32Array(0, 0.939, 0.9655172, 0.9885057)
+colors = PackedColorArray(0, 0, 0, 1, 0.18565181, 0.1856474, 0.16217089, 1, 0.40784314, 0.40784314, 0.07058824, 1, 1, 1, 0, 1)
+
+[sub_resource type="Curve" id="Curve_p21b5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.80499995, 0), 0.0, 0.0, 0, 0, Vector2(0.91999996, 0.92134833), 4.14866, 4.14866, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2d0f3"]
+transparency = 1
+albedo_color = Color(0.54901963, 1, 1, 0.15686275)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e13ah"]
+material = SubResource("StandardMaterial3D_2d0f3")
+size = Vector2(1024, 1024)
+
 [node name="TestMap" type="Node3D" unique_id=1311249851]
 
 [node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
@@ -24,3 +49,16 @@ environment = SubResource("Environment_fn2sa")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2065624851]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Terrain" type="Node3D" parent="." unique_id=1576389374 node_paths=PackedStringArray("water")]
+script = ExtResource("3_57l66")
+height_map = SubResource("NoiseTexture2D_fn2sa")
+height_multiplier = 20.0
+length_multiplier = 4.0
+color_gradient = SubResource("Gradient_p21b5")
+water = NodePath("water")
+max_depth = 40.0
+island_height_cutoff = SubResource("Curve_p21b5")
+
+[node name="water" type="MeshInstance3D" parent="Terrain" unique_id=117240933]
+mesh = SubResource("PlaneMesh_e13ah")
