@@ -12,10 +12,8 @@ albedo_texture = ExtResource("1_gua2t")
 radius = 0.52
 height = 2.1
 
-[node name="Body" type="CharacterBody3D" unique_id=795292559 node_paths=PackedStringArray("camera_origin", "camera_pivot")]
+[node name="Body" type="CharacterBody3D" unique_id=795292559]
 script = ExtResource("1_r3h5y")
-camera_origin = NodePath("CameraOrigin")
-camera_pivot = NodePath("CameraOrigin/CameraPivot")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1851666133]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
@@ -25,14 +23,3 @@ mesh = SubResource("CapsuleMesh_0jn7k")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1769967641]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_0jn7k")
-
-[node name="CameraOrigin" type="Node3D" parent="." unique_id=654721430]
-
-[node name="CameraPivot" type="Node3D" parent="CameraOrigin" unique_id=1158596557]
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin/CameraPivot" unique_id=2101071547]
-spring_length = 5.0
-margin = 1.0
-
-[node name="Camera3D" type="Camera3D" parent="CameraOrigin/CameraPivot/SpringArm3D" unique_id=213065289]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
