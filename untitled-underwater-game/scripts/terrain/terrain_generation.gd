@@ -36,8 +36,8 @@ func generate_terrain() -> void:
 	
 	var min_x = 0
 	var min_y = 0
-	var max_x = map_size.x
-	var max_y = map_size.y
+	var max_x = map_size.x - 1
+	var max_y = map_size.y - 1
 	
 	for x in range(min_x, max_x, ):
 		for y in range(min_y, max_y):
