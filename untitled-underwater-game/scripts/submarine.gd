@@ -1,22 +1,50 @@
 extends CharacterBody3D
 class_name Submarine
 
+# Export variables
+@export var main_propeller: MeshInstance3D
+@export var left_propeller: MeshInstance3D
+@export var right_propeller: MeshInstance3D
+@export var main_prop_base: Node3D
+
+# Constants
 const SPEED: float = 4.0
 const ACCELERATION: float = 2.0
 const TURN_SPEED: float = 1.0
 const TURN_ACCELERATION: float = 2.0
+const PROPELLER_SPEED: float = 10
+const PROPELLER_ACCELERATION: float = 8.0
+const PROPELLER_ROTATION_SMOOTHING: float = 0.02
+const SMALL_PROPELLER_ACCELERATION: float = 10.0
+const SMALL_PROPELLER_ROTATION_SMOOTHING: float = 0.02
 
+# Variables
 var forward_speed: float = 0.0
 var turn_velocity: Vector2 = Vector2.ZERO
+var main_propeller_speed: float = 0.0
+var left_propeller_speed: float = 0.0
+var right_propeller_speed: float = 0.0
 
+var tween: Tween
+
+
+func _unhandled_key_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("up"):
+		rotate_main_propeller(135.0)
+	elif Input.is_action_just_pressed("down"):
+		rotate_main_propeller(45.0)
+	else:
+		rotate_main_propeller(90)
+
+
+## Handles the turning and velocity of the submarine.
+## Also spinns the propellers.
 func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
-	var target_turn: Vector2 = input_dir * TURN_SPEED
+	turn_velocity = turn_velocity.lerp(input_dir * TURN_SPEED, TURN_ACCELERATION * delta)
 	
-	turn_velocity = turn_velocity.lerp(target_turn, TURN_ACCELERATION * delta)
 	rotation.y -= turn_velocity.x * delta
 	rotation.x += turn_velocity.y * delta
-	rotation.x = clamp(rotation.x, deg_to_rad(-85), deg_to_rad(85))
 	
 	var velocity_dir: float = 0.0
 	if Input.is_action_pressed("gas"):
@@ -26,5 +54,24 @@ func _physics_process(delta: float) -> void:
 	
 	forward_speed = move_toward(forward_speed, velocity_dir * SPEED, ACCELERATION * delta)
 	velocity = -global_transform.basis.z * forward_speed
+	
+	if velocity_dir:
+		main_propeller_speed = move_toward(main_propeller_speed, velocity_dir * PROPELLER_SPEED, PROPELLER_ACCELERATION * delta)
+	else:
+		main_propeller_speed = move_toward(main_propeller_speed, input_dir.y * PROPELLER_SPEED, PROPELLER_ACCELERATION * delta)
+	main_propeller.rotate_y(-main_propeller_speed * PROPELLER_ROTATION_SMOOTHING)
+	
+	left_propeller_speed = move_toward(left_propeller_speed, max(input_dir.x, 0.0) * PROPELLER_SPEED, SMALL_PROPELLER_ACCELERATION * delta)
+	left_propeller.rotate_z(-left_propeller_speed * SMALL_PROPELLER_ROTATION_SMOOTHING)
+	
+	right_propeller_speed = move_toward(right_propeller_speed, min(input_dir.x, 0.0) * PROPELLER_SPEED, SMALL_PROPELLER_ACCELERATION * delta)
+	right_propeller.rotate_z(-right_propeller_speed * SMALL_PROPELLER_ROTATION_SMOOTHING)
 
 	move_and_slide()
+
+
+func rotate_main_propeller(angle: float) -> void:
+	if tween and tween.is_running():
+			tween.kill()
+	tween = get_tree().create_tween()
+	tween.tween_property(main_prop_base, "rotation", Vector3(deg_to_rad(angle), 0, 0), 0.7).set_trans(Tween.TRANS_SINE)
