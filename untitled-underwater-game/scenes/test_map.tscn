@@ -54,7 +54,7 @@ shadow_enabled = true
 [node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
 
 [node name="FollowCam" parent="." unique_id=2038270964 node_paths=PackedStringArray("target") instance=ExtResource("3_bdpbv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
 target = NodePath("../Submarine")
 
 [node name="Terrain" type="Node3D" parent="." unique_id=1576389374 node_paths=PackedStringArray("water")]
