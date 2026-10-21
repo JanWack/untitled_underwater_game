@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://2mlb4ly5myq3" path="res://assets/environments/kloofendal_48d_partly_cloudy_puresky_4k.hdr" id="1_6ulkd"]
 [ext_resource type="PackedScene" uid="uid://bwtv6nod8ovtg" path="res://scenes/submarine.tscn" id="2_fn2sa"]
 [ext_resource type="Script" uid="uid://ckkp8j21wg3lf" path="res://scripts/terrain/terrain_generation.gd" id="3_57l66"]
+[ext_resource type="PackedScene" uid="uid://duq6hibgixvvv" path="res://scenes/follow_cam.tscn" id="3_bdpbv"]
 [ext_resource type="FastNoiseLite" uid="uid://bdr8a2vsj1bix" path="res://assets/terrain/terrain_noise.tres" id="4_p21b5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_57l66"]
@@ -41,14 +42,20 @@ size = Vector2(1024, 1024)
 
 [node name="TestMap" type="Node3D" unique_id=1311249851]
 
-[node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
+[node name="Env" type="Node3D" parent="." unique_id=955323700]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2020333653]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env" unique_id=2020333653]
 environment = SubResource("Environment_fn2sa")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2065624851]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env" unique_id=2065624851]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
+
+[node name="FollowCam" parent="." unique_id=2038270964 node_paths=PackedStringArray("target") instance=ExtResource("3_bdpbv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+target = NodePath("../Submarine")
 
 [node name="Terrain" type="Node3D" parent="." unique_id=1576389374 node_paths=PackedStringArray("water")]
 script = ExtResource("3_57l66")
