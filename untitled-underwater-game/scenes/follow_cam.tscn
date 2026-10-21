@@ -4,3 +4,4 @@
 
 [node name="FollowCam" type="Camera3D" unique_id=2038270964]
 script = ExtResource("1_ig783")
+hight_diff = 1.5
