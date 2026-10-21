@@ -3,6 +3,7 @@ extends Camera3D
 @export var turn_speed: float = 60
 @export var follow_dist: float = 5
 @export var follow_speed: float = 2
+@export var hight_diff: float = 2.5
 @export var target: Submarine
 
 
@@ -14,7 +15,7 @@ func _physics_process(delta) -> void:
 	var to_target = target.global_transform.origin - global_transform.origin
 	var dist = to_target.length()
 	var move_vec = to_target
-	#move_vec.y = 0
+	move_vec.y += hight_diff
 	to_target = to_target.normalized()
 	
 	var accel = dist - follow_dist
