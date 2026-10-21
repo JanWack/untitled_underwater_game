@@ -12,11 +12,10 @@ albedo_texture = ExtResource("1_gua2t")
 radius = 0.52
 height = 2.1
 
-[node name="Submarine" type="CharacterBody3D" unique_id=795292559 node_paths=PackedStringArray("camera_origin", "camera_pivot", "camera")]
+[node name="Body" type="CharacterBody3D" unique_id=795292559 node_paths=PackedStringArray("camera_origin", "camera_pivot")]
 script = ExtResource("1_r3h5y")
 camera_origin = NodePath("CameraOrigin")
 camera_pivot = NodePath("CameraOrigin/CameraPivot")
-camera = NodePath("CameraOrigin/CameraPivot/SpringArm3D/Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1851666133]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
