@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dy1gwvxdmw15x"]
+
+[ext_resource type="Script" uid="uid://pvb5e0nnl1nh" path="res://scripts/photo_preview.gd" id="1_tgna6"]
+
+[node name="PhotoPreview" type="CanvasLayer" unique_id=292021336 node_paths=PackedStringArray("texture_rect")]
+script = ExtResource("1_tgna6")
+texture_rect = NodePath("MarginContainer/VBoxContainer/PanelContainer/MarginContainer/TextureRect")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=156948004]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.22352941)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1535402495]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1249987254]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=130958194]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=470709076]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1929152488]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=363132598]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Keep" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1201374019]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Keep"
+
+[node name="Discard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1526560259]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Discard"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Keep" to="." method="_on_keep_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Discard" to="." method="_on_discard_pressed"]
