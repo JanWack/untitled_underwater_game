@@ -11,6 +11,13 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
+func _unhandled_key_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("switch_camera"):
+		target.switch_to_photo_camera()
+	elif Input.is_action_just_released("switch_camera"):
+		self.current = true
+
+
 func _physics_process(delta) -> void:
 	var to_target = target.global_transform.origin - global_transform.origin
 	var dist = to_target.length()
