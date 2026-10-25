@@ -124,3 +124,7 @@ text = "Move Camera: WASD	"
 [node name="Label2" type="Label" parent="Cross/MarginContainer/HBoxContainer" unique_id=1565256485]
 layout_mode = 2
 text = "Take Picture: LMB"
+
+[node name="Label3" type="Label" parent="Cross/MarginContainer/HBoxContainer" unique_id=1828566207]
+layout_mode = 2
+text = "Zoom In/Out: Scroll Wheel"
