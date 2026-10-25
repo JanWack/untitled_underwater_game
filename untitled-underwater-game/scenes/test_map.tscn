@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bwtv6nod8ovtg" path="res://scenes/submarine.tscn" id="2_fn2sa"]
 [ext_resource type="Script" uid="uid://ckkp8j21wg3lf" path="res://scripts/terrain/terrain_generation.gd" id="3_57l66"]
 [ext_resource type="PackedScene" uid="uid://duq6hibgixvvv" path="res://scenes/follow_cam.tscn" id="3_bdpbv"]
+[ext_resource type="Material" uid="uid://vupq4xdw4cs4" path="res://assets/water/water_material.tres" id="4_kddbv"]
 [ext_resource type="FastNoiseLite" uid="uid://bdr8a2vsj1bix" path="res://assets/terrain/terrain_noise.tres" id="4_p21b5"]
 [ext_resource type="PackedScene" uid="uid://dy1gwvxdmw15x" path="res://scenes/photo_preview.tscn" id="6_ss0f2"]
 
@@ -33,13 +34,10 @@ colors = PackedColorArray(0, 0, 0, 1, 0.18565181, 0.1856474, 0.16217089, 1, 0.40
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.80499995, 0), 0.0, 0.0, 0, 0, Vector2(0.91999996, 0.92134833), 4.14866, 4.14866, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2d0f3"]
-transparency = 1
-albedo_color = Color(0.54901963, 1, 1, 0.15686275)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_e13ah"]
-material = SubResource("StandardMaterial3D_2d0f3")
 size = Vector2(1024, 1024)
+subdivide_width = 1024
+subdivide_depth = 1024
 
 [node name="TestMap" type="Node3D" unique_id=1311249851]
 
@@ -63,6 +61,7 @@ max_depth = 40.0
 island_height_cutoff = SubResource("Curve_p21b5")
 
 [node name="water" type="MeshInstance3D" parent="Terrain" unique_id=117240933]
+material_override = ExtResource("4_kddbv")
 mesh = SubResource("PlaneMesh_e13ah")
 
 [node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
