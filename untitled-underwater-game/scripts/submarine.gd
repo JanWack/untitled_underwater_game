@@ -6,8 +6,8 @@ class_name Submarine
 @export var left_propeller: MeshInstance3D
 @export var right_propeller: MeshInstance3D
 @export var main_prop_base: Node3D
-@export var photo_pivot: Node3D
 @export var photo_camera: Camera3D
+@export var cross: Control
 
 # Constants
 const SPEED: float = 5.0
@@ -28,6 +28,10 @@ var left_propeller_speed: float = 0.0
 var right_propeller_speed: float = 0.0
 
 var tween: Tween
+
+
+func _ready() -> void:
+	cross.hide()
 
 
 ## Handles the player input
@@ -78,6 +82,10 @@ func rotate_main_propeller(angle: float) -> void:
 	tween.tween_property(main_prop_base, "rotation", Vector3(deg_to_rad(angle), 0, 0), 0.7).set_trans(Tween.TRANS_SINE)
 
 
-func switch_to_photo_camera() -> void:
-	photo_camera.fov = 60.0
-	photo_camera.current = true
+func switch_to_photo_camera(switch: bool) -> void:
+	if switch:
+		cross.show()
+		photo_camera.fov = 60.0
+		photo_camera.current = true
+	else:
+		cross.hide()

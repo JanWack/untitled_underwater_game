@@ -6,16 +6,28 @@ extends Camera3D
 @export var hight_diff: float = 2.5
 @export var target: Submarine
 
+var is_looking_at_photo: bool = false
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	GlobalSignals.looking_at_photo.connect(
+		func(done: bool):
+			is_looking_at_photo = done
+			if not done:
+				target.switch_to_photo_camera(false)
+				self.current = true
+	)
 
 
 func _unhandled_key_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("switch_camera"):
-		target.switch_to_photo_camera()
-	elif Input.is_action_just_released("switch_camera"):
-		self.current = true
+	if not is_looking_at_photo:
+		if Input.is_action_just_pressed("switch_camera"):
+			target.switch_to_photo_camera(true)
+		elif Input.is_action_just_released("switch_camera"):
+			target.switch_to_photo_camera(false)
+			self.current = true
 
 
 func _physics_process(delta) -> void:

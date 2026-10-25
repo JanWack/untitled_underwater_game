@@ -13,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.22352941)
+color = Color(0, 0, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1535402495]
 anchors_preset = 15
@@ -59,6 +59,7 @@ theme_override_constants/margin_bottom = 16
 [node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer2" unique_id=948560352]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
 placeholder_text = "Name:"
 alignment = 1
 max_length = 32
@@ -72,12 +73,12 @@ alignment = 1
 
 [node name="Keep" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1201374019]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 24
 text = "Keep"
 
 [node name="Discard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1526560259]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 24
 text = "Discard"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Keep" to="." method="_on_keep_pressed"]

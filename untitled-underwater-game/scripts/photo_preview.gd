@@ -13,6 +13,7 @@ func _ready() -> void:
 	GlobalSignals.save_or_discard_photo.connect(
 		func(img: Image):
 			if self.new_img == null:
+				GlobalSignals.looking_at_photo.emit(true)
 				self.show()
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 				self.new_img = img
@@ -22,6 +23,8 @@ func _ready() -> void:
 
 func _on_keep_pressed() -> void:
 	if new_img != null:
+		GlobalSignals.looking_at_photo.emit(false)
+		
 		var img_name: String = "res://InGameImages/"
 		if line_edit.text.is_empty(): img_name = str(img_name, new_img.get_rid(), ".png")
 		else: img_name = str(img_name, line_edit.text, ".png")
@@ -34,6 +37,8 @@ func _on_keep_pressed() -> void:
 
 
 func _on_discard_pressed() -> void:
+	GlobalSignals.looking_at_photo.emit(false)
+	
 	self.new_img = null
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	self.hide()
