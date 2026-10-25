@@ -6,6 +6,8 @@ class_name Submarine
 @export var left_propeller: MeshInstance3D
 @export var right_propeller: MeshInstance3D
 @export var main_prop_base: Node3D
+@export var photo_camera: Camera3D
+@export var cross: Control
 
 # Constants
 const SPEED: float = 5.0
@@ -28,6 +30,10 @@ var right_propeller_speed: float = 0.0
 var tween: Tween
 
 
+func _ready() -> void:
+	cross.hide()
+
+
 ## Handles the player input
 func _unhandled_key_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("up"): rotate_main_propeller(135.0)
@@ -45,8 +51,9 @@ func _physics_process(delta: float) -> void:
 	rotate_object_local(Vector3.RIGHT, turn_velocity.y * delta) # Prevents gimbal-lock or smth...
 	
 	var velocity_dir: float = 0.0
-	if Input.is_action_pressed("gas"): velocity_dir += 1.0
-	if Input.is_action_pressed("break"): velocity_dir -= 1.0
+	if not photo_camera.current:
+		if Input.is_action_pressed("gas"): velocity_dir += 1.0
+		if Input.is_action_pressed("break"): velocity_dir -= 1.0
 	
 	forward_speed = move_toward(forward_speed, velocity_dir * SPEED, ACCELERATION * delta)
 	velocity = -global_transform.basis.z * forward_speed
@@ -73,3 +80,12 @@ func rotate_main_propeller(angle: float) -> void:
 			tween.kill()
 	tween = get_tree().create_tween()
 	tween.tween_property(main_prop_base, "rotation", Vector3(deg_to_rad(angle), 0, 0), 0.7).set_trans(Tween.TRANS_SINE)
+
+
+func switch_to_photo_camera(switch: bool) -> void:
+	if switch:
+		cross.show()
+		photo_camera.fov = 60.0
+		photo_camera.current = true
+	else:
+		cross.hide()

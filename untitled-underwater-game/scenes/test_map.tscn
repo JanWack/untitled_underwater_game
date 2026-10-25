@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://ckkp8j21wg3lf" path="res://scripts/terrain/terrain_generation.gd" id="3_57l66"]
 [ext_resource type="PackedScene" uid="uid://duq6hibgixvvv" path="res://scenes/follow_cam.tscn" id="3_bdpbv"]
 [ext_resource type="FastNoiseLite" uid="uid://bdr8a2vsj1bix" path="res://assets/terrain/terrain_noise.tres" id="4_p21b5"]
+[ext_resource type="PackedScene" uid="uid://dy1gwvxdmw15x" path="res://scenes/photo_preview.tscn" id="6_ss0f2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_57l66"]
 panorama = ExtResource("1_6ulkd")
@@ -51,12 +52,6 @@ environment = SubResource("Environment_fn2sa")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
-
-[node name="FollowCam" parent="." unique_id=2038270964 node_paths=PackedStringArray("target") instance=ExtResource("3_bdpbv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
-target = NodePath("../Submarine")
-
 [node name="Terrain" type="Node3D" parent="." unique_id=1576389374 node_paths=PackedStringArray("water")]
 script = ExtResource("3_57l66")
 height_map = SubResource("NoiseTexture2D_fn2sa")
@@ -69,3 +64,11 @@ island_height_cutoff = SubResource("Curve_p21b5")
 
 [node name="water" type="MeshInstance3D" parent="Terrain" unique_id=117240933]
 mesh = SubResource("PlaneMesh_e13ah")
+
+[node name="Submarine" parent="." unique_id=795292559 instance=ExtResource("2_fn2sa")]
+
+[node name="FollowCam" parent="." unique_id=2038270964 node_paths=PackedStringArray("target") instance=ExtResource("3_bdpbv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+target = NodePath("../Submarine")
+
+[node name="PhotoPreview" parent="." unique_id=292021336 instance=ExtResource("6_ss0f2")]
