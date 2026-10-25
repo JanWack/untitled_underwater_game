@@ -23,6 +23,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 			var new_fov: float = clamp(self.fov + 10.0, 30.0, 75.0)
 			tween.tween_property(self, "fov", new_fov, 0.3).set_trans(Tween.TRANS_SINE)
 		elif Input.is_action_just_pressed("take_photo"):
-			var img: ViewportTexture = get_viewport().get_texture()
-			var img_name: String = str("res://InGameImages/", self.global_position, ".png")
-			GlobalSignals.save_or_discard_photo.emit(img, img_name)
+			await RenderingServer.frame_post_draw
+			var img: Image = get_viewport().get_texture().get_image()
+			GlobalSignals.save_or_discard_photo.emit(img)
