@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://vupq4xdw4cs4" path="res://assets/water/water_material.tres" id="4_kddbv"]
 [ext_resource type="FastNoiseLite" uid="uid://bdr8a2vsj1bix" path="res://assets/terrain/terrain_noise.tres" id="4_p21b5"]
 [ext_resource type="PackedScene" uid="uid://dy1gwvxdmw15x" path="res://scenes/photo_preview.tscn" id="6_ss0f2"]
+[ext_resource type="Script" uid="uid://cop2gekiilgn8" path="res://scripts/underwater_check.gd" id="7_pw728"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_57l66"]
 panorama = ExtResource("1_6ulkd")
@@ -73,5 +74,10 @@ mesh = SubResource("PlaneMesh_e13ah")
 [node name="FollowCam" parent="." unique_id=2038270964 node_paths=PackedStringArray("target") instance=ExtResource("3_bdpbv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
 target = NodePath("../Submarine")
+
+[node name="UnderwaterCheck" type="Node3D" parent="FollowCam" unique_id=947147771 node_paths=PackedStringArray("world_environment", "water")]
+script = ExtResource("7_pw728")
+world_environment = NodePath("../../Env/WorldEnvironment")
+water = NodePath("../../Terrain/water")
 
 [node name="PhotoPreview" parent="." unique_id=292021336 instance=ExtResource("6_ss0f2")]
