@@ -18,6 +18,10 @@ sky_material = SubResource("PanoramaSkyMaterial_57l66")
 background_mode = 2
 sky = SubResource("Sky_6ulkd")
 glow_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(6.6420434e-06, 0.51023895, 0.82130754, 1)
+fog_density = 1.0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fn2sa"]
 width = 128
